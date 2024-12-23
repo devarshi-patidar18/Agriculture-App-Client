@@ -1,0 +1,31 @@
+<div class="calculatorContainer">
+  <h2>Farmer Labour Calculator</h2>
+  <form #calculatorForm="ngForm">
+    <div>
+      <label>Per Day Cost:</label>
+      <input type="number" [(ngModel)]="perDayCost" name="perDayCost" />
+    </div>
+    <div>
+      <label>Total Number of Days:</label>
+      <input type="number" [(ngModel)]="totalDays" name="totalDays" />
+    </div>
+    <div>
+      <label>Payment Made by Farmer:</label>
+      <input type="number" [(ngModel)]="paymentMadeByFarmer" name="paymentMadeByFarmer" />
+    </div>
+    <div>
+      <button (click)="calculateTotalPayout()">Calculate Total Payout</button>
+      <button type="reset">Clear</button> <!-- Use type="reset" on the Clear button -->
+    </div>
+    <div *ngIf="totalPayout !== null">
+      <p class="totalPayout">Total Payout for Labour: {{ totalPayout }}</p>
+    </div>
+  </form>
+</div>
+
+<br><br>
+
+  <div> <app-expenses-income-calculator></app-expenses-income-calculator></div>
+
+  <div> <app-labour-attendance-and-payment></app-labour-attendance-and-payment></div>
+  

@@ -1,0 +1,142 @@
+<!-- Header Starts -->
+@if (isHeader) {
+<nav class="navbar fixed-top d-flex flex-row">
+    @if ((dataStore.showHeaderFooter)) {
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="">
+            <img class="logo" src="../../../assets/agri_logo.jpeg" alt="logo">
+        </a>
+        <input (focus)="dataStore.globalSearchActive=true" class="form-control me-2 searchInputBox" placeholder="Search"
+            aria-label="Search" [(ngModel)]="globalSearch">
+        @if (dataStore.globalSearchActive && globalSearch!="" ) {
+        <button class="btn btn-outline-success">
+            <i class="fas fa-search"></i>
+        </button>
+        }
+
+        <!-- Message Icon Starts -->
+         @if (screenWidth >=600 && (dataStore.showHeaderFooter)) {
+            <button routerLink="/message-app" class="btn btn-outline-success">
+                <i class="fas fa-message"></i>
+            </button>
+         }
+        <!-- Message Icon Ends -->
+
+        <!-- <i class="fas fa-search"></i> -->
+        <!-- @if (userSession==null) {} -->
+        @if (dataStore.isLoggedIn) {
+        <button (click)="loggedInUser()" class="ml-1 mr-1 btn btn-outline-success">
+            <i class="fas fa-user"></i>
+        </button>
+
+        }@else {
+        <button (click)="dataStore.showHeaderFooter=false" class="ml-1 mr-1 btn btn-outline-success">
+            <i routerLink="/login">Login</i>
+        </button>
+        }
+
+    </div>
+    }
+
+
+    <!-- Web options starts -->
+    @if (screenWidth >=600 && (dataStore.showHeaderFooter)) {
+
+    <div class="container-fluid">
+
+        <i class=" navbar-brand-for-blank-place"></i>
+
+        @for (item of menuItemsList; track $index) {
+        <i [class.navbar-brand]="true" [routerLink]="item.routerLink" [style.color]="!($index==this.dataStore.activeFooterIconNumber)?'#198754':'black'">
+            {{item.name}}
+        </i>
+
+        @if($index==this.dataStore.activeFooterIconNumber){
+            <i class="fa-solid fa-sort-down fa-xs mb-1 agri-color" ></i>
+            }
+
+        }
+        <i class=" navbar-brand-for-blank-place"></i>
+    </div>
+    }
+    <!-- Web options starts -->
+
+</nav>
+}
+<!-- Header Ends -->
+
+<!-- Mobile Footer Starts -->
+@if (screenWidth<600 && isFooter && (dataStore.showHeaderFooter )) { <nav
+    class="navbar fixed-bottom m-2 bg-body-tertiary">
+
+    <div class="container-fluid">
+
+        @for (item of menuItemsList; track $index) {
+        <!-- <i [classList]="item.iconsClassList" [routerLink]="item.routerLink"  
+        ></i>
+        <i class="fa-solid fa-sort-up fa-xs" style="color: #135736;"></i> -->
+
+        <div class="icon-container">
+            @if($index==this.dataStore.activeFooterIconNumber){
+            <i class="fa-solid fa-sort-up fa-xs mb-1 agri-color" ></i>
+            }
+
+            <!-- @if(dataStore.isLoggedIn){ -->
+                <i [classList]="item.iconsClassList" [routerLink]="item.routerLink"
+                [style.color]="!($index==this.dataStore.activeFooterIconNumber)?'#198754':'black'"></i>
+            <!-- } -->
+
+
+        </div>
+       
+        }
+
+    </div>
+    </nav>
+    }
+    <!-- Mobile footer Ends -->
+
+
+    <div class=" flex justify-content-center">
+        <!-- <p-button (click)="showDialog()" label="Show" /> -->
+        <p-dialog header="{{user.name==''||user.name==null?'No name!':user.name}}" [modal]="true" [(visible)]="visible"
+            [style]="{ width: '20rem' }">
+
+            <!-- <div class="overlay-content">
+                <div class="user-details">
+                    <p>Contact Number: <strong>{{ user.contactNumber }}</strong></p>
+                    <p>Access: <strong>{{ user.role==undefined||user.role==null?'---':user.role.rolename}}</strong></p>
+                    <p>Farm: <strong>{{ user.farm==undefined||user.farm==null?'---':user.farm}}</strong></p>
+                    <p>Email: <strong>{{ user.email==undefined||user.email==null?'---':user.email}}</strong></p>
+                </div>
+            </div> -->
+            <div class="overlay-content">
+                <div class="user-details">
+                  <div class="detail">
+                    <img src="../../../assets/agri_logo.jpeg" class="userProfileImg">
+                  </div>
+                  <div class="detail">
+                    <h4>Contact Number</h4>
+                    <p>{{ user.contactNumber }}</p>
+                  </div>
+                  <div class="detail">
+                    <h4>Role</h4>
+                    <p>{{ user.role==undefined||user.role==null?'---':user.role.rolename}}</p>
+                  </div>
+                  <div class="detail">
+                    <h4>Email</h4>
+                    <p>{{ user.email==undefined||user.email==null?'---':user.email}}</p>
+                  </div>
+                </div>
+              </div>
+            <div class="flex justify-content-end gap-2">
+
+                <button (click)="visible = false;logOut()" type="submit" pButton pRipple class=" mr-2 bg-gray-700"
+                    style="border-radius: 5px;">Logout</button>
+
+                <button (click)="visible = false;dataStore.showHeaderFooter=false;dataStore.isUserEditFlag=true"
+                    type="submit" pButton pRipple class=" ml-2 agri-bg" style="border-radius: 5px;"
+                    routerLink="/signup">Edit  </button>
+            </div>
+        </p-dialog>
+    </div>

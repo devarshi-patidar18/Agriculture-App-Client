@@ -1,0 +1,26 @@
+<!-- weather.component.html -->
+<div *ngIf="errorMessage">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<div class="current-weather">
+  <div class="left-section">
+    <div class="icon">
+      @if(getWeatherIconUrl(weatherData?.weather[0]?.icon) != ""){
+        <img [src]="getWeatherIconUrl(weatherData?.weather[0]?.icon)" alt="Weather Icon" class="sun-logo">
+      }
+      @else{
+        <i class="icon-smile"></i>
+      }
+    </div>
+    <div class="temperature"> {{ weatherData?.main?.temp }}°C</div>
+    <div class="city">{{ weatherData?.name }},</div>
+    <div class="description">{{ weatherData?.weather[0]?.description }}</div>
+    
+  </div>
+  <div class="right-section">
+    <a routerLink="/weatherForecast" class="weather-forecast-link">View Weather Forecast</a>
+  </div>  
+</div>
+
+
